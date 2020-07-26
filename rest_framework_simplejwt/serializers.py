@@ -51,7 +51,7 @@ class TokenObtainSerializer(serializers.Serializer):
         # sensible backwards compatibility with older Django versions.
         if self.user is None or not self.user.is_active:
             raise exceptions.AuthenticationFailed(
-                self.error_messages['no_active_account'],
+                {'auth': [self.error_messages['no_active_account']]},
                 'no_active_account',
             )
 
@@ -111,10 +111,10 @@ class TokenRefreshSerializer(serializers.Serializer):
                     # not be present
                     pass
 
-        refresh.set_jti()
-        refresh.set_exp()
+            refresh.set_jti()
+            refresh.set_exp()
 
-        data['refresh_token'] = str(refresh)
+            data['refresh_token'] = str(refresh)
 
         return data
 

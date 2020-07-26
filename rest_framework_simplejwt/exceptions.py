@@ -16,17 +16,15 @@ class DetailDictMixin:
         Builds a detail dictionary for the error to give more information to API
         users.
         """
-        detail_dict = {'key': self.default_code, 'message': self.default_detail}
+        detail_dict = {'key': self.default_code, 'detail': self.default_detail}
 
         if isinstance(detail, dict):
             detail_dict.update(detail)
         elif detail is not None:
-            detail_dict['message'] = detail
+            detail_dict['detail'] = detail
 
         if code is not None:
             detail_dict['key'] = code
-        if code is None:
-            detail_dict['key'] = 'authentification'
 
         super().__init__(detail_dict)
 
