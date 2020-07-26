@@ -16,7 +16,7 @@ class DetailDictMixin:
         Builds a detail dictionary for the error to give more information to API
         users.
         """
-        detail_dict = {'key': self.default_code, 'detail': self.default_detail}
+        detail_dict = {'detail': self.default_detail, 'key': self.default_code}
 
         if isinstance(detail, dict):
             detail_dict.update(detail)
