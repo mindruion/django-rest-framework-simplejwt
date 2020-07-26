@@ -72,8 +72,8 @@ class TokenObtainPairSerializer(TokenObtainSerializer):
 
         refresh = self.get_token(self.user)
 
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
+        data['refresh_token'] = str(refresh)
+        data['access_token'] = str(refresh.access_token)
 
         return data
 
@@ -94,12 +94,12 @@ class TokenObtainSlidingSerializer(TokenObtainSerializer):
 
 
 class TokenRefreshSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
+    refresh_token = serializers.CharField()
 
     def validate(self, attrs):
-        refresh = RefreshToken(attrs['refresh'])
+        refresh = RefreshToken(attrs['refresh_token'])
 
-        data = {'access': str(refresh.access_token)}
+        data = {'access_token': str(refresh.access_token)}
 
         if api_settings.ROTATE_REFRESH_TOKENS:
             if api_settings.BLACKLIST_AFTER_ROTATION:
@@ -111,10 +111,10 @@ class TokenRefreshSerializer(serializers.Serializer):
                     # not be present
                     pass
 
-            refresh.set_jti()
-            refresh.set_exp()
+        refresh.set_jti()
+        refresh.set_exp()
 
-            data['refresh'] = str(refresh)
+        data['refresh_token'] = str(refresh)
 
         return data
 
